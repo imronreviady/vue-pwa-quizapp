@@ -16,6 +16,7 @@
 										<v-text-field
 										label="Question"
 										:value="item.question"
+										@input="updateQuestionTitle($event, questionIndex)"
 										></v-text-field>
 									</v-flex>
 									<v-flex xs2>
@@ -23,6 +24,7 @@
 										type="number"
 										label="Points"
 										:value="item.points"
+										@input="updateQuestionPoints($event, questionIndex)"
 										></v-text-field>
 									</v-flex>
 								</v-layout>
@@ -33,9 +35,16 @@
 									:key="answerIndex"
 									>
 										<v-flex xs10>
+											<v-checkbox
+											label="Right Answer"
+											:input-value="answer.isRight"
+											hide-details
+											@change="updateAnswerState($event, questionIndex, answerIndex)"
+											></v-checkbox>
 											<v-text-field
 											label="Answer"
 											:value="answer.answer"
+											@input="updateAnswerText($event, questionIndex, answerIndex)"
 											></v-text-field>
 										</v-flex>
 										<v-flex xs2>
@@ -77,7 +86,7 @@
 <script>
 	import { mapMutations, mapGetters } from 'vuex'
 
-	import { ADD_ANSWER, REMOVE_QUESTION, REMOVE_ANSWER } from '@/store/quiz/mutations'
+	import { ADD_ANSWER, REMOVE_QUESTION, REMOVE_ANSWER, UPDATE_ANSWER, UPDATE_QUESTION } from '@/store/quiz/mutations'
 
 	export default {
 		name: 'quiz-question',
@@ -90,8 +99,43 @@
 			...mapMutations('quiz', {
 				addAnswer: ADD_ANSWER,
 				removeQuestion: REMOVE_QUESTION,
-				removeAnswer: REMOVE_ANSWER
-			})
+				removeAnswer: REMOVE_ANSWER,
+				updateAnswer: UPDATE_ANSWER,
+				updateQuestion: UPDATE_QUESTION
+			}),
+			updateAnswerText(value, questionIndex, answerIndex) {
+				this.updateAnswer({
+					answer: value,
+					isRight: this.quiz.questions[questionIndex].answers[answerIndex].isRight,
+					questionIndex,
+					answerIndex
+				})
+			},
+			updateAnswerState(value, questionIndex, answerIndex) {
+				this.updateAnswer({
+					isRight: value,
+					answer: this.quiz.questions[questionIndex].answers[answerIndex].answer,
+					questionIndex,
+					answerIndex
+				})
+			},
+			updateQuestionTitle(value, questionIndex) {
+				this.updateQuestion({
+					question: value,
+					points: this.quiz.questions[questionIndex].points,
+					questionIndex
+				})
+			},
+			updateQuestionPoints(value, questionIndex) {
+				const points = parseInt(value);
+				if (isNaN(points) || points < 0) return;
+
+				this.updateQuestion({
+					question: this.quiz.questions[questionIndex].question,
+					points,
+					questionIndex
+				})
+			}
 		}
 	}
 </script>
