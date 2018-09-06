@@ -9,7 +9,9 @@ import {
 	ADD_ANSWER, 
 	REMOVE_ANSWER, 
 	UPDATE_ANSWER, 
-	RESET_QUIZ 
+	RESET_QUIZ,
+	RESET_QUIZ_LIST,
+	PUSH_QUIZ
 } from './mutations'
 
 const state = {
@@ -24,11 +26,13 @@ const state = {
 				isRight: false
 			}]
 		}]
-	}
+	},
+	list: []
 }
 
 const getters = {
-	newQuiz: ({newQuiz}) => newQuiz
+	newQuiz: ({newQuiz}) => newQuiz,
+	list: ({list}) => list
 }
 
 const mutations = {
@@ -90,6 +94,12 @@ const mutations = {
 
 		answer.isRight = isRight
 		answer.answer = answerText
+	},
+	[PUSH_QUIZ](state, quiz) {
+		state.list.push(quiz)
+	},
+	[RESET_QUIZ_LIST](state) {
+		state.list = []
 	}
 }
 
@@ -122,6 +132,20 @@ const actions = {
 		} else {
 			alert('Unauthorized')
 		}
+	},
+	list({commit}) {
+		commit(RESET_QUIZ_LIST)
+
+		db.collection('quizes').onSnapshot(snapshot => {
+			snapshot.docChanges().forEach(function(change) {
+				if (change.type === "added") {
+					commit(PUSH_QUIZ, {
+						id: change.doc.id,
+						...change.doc.data()
+					})
+				}
+			})
+		})
 	}
 }
 

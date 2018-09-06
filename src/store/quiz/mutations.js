@@ -9,3 +9,6 @@ export const REMOVE_ANSWER = "REMOVE_ANSWER"
 export const UPDATE_ANSWER = "UPDATE_ANSWER"
 
 export const RESET_QUIZ = "RESET_NEW_QUIZ"
+
+export const PUSH_QUIZ = "PUSH_QUIZ"
+export const RESET_QUIZ_LIST = "export const"
