@@ -13,19 +13,19 @@
 							<v-container>
 								<v-layout wrap>
 									<v-flex xs10>
-										<v-text-field
+										<v-textarea
 										label="Question"
 										:value="item.question"
 										@input="updateQuestionTitle($event, questionIndex)"
-										></v-text-field>
+										></v-textarea>
 									</v-flex>
 									<v-flex xs2>
-										<v-text-field
+										<v-textarea
 										type="number"
 										label="Points"
 										:value="item.points"
 										@input="updateQuestionPoints($event, questionIndex)"
-										></v-text-field>
+										></v-textarea>
 									</v-flex>
 								</v-layout>
 								<v-container>
@@ -41,11 +41,11 @@
 											hide-details
 											@change="updateAnswerState($event, questionIndex, answerIndex)"
 											></v-checkbox>
-											<v-text-field
+											<v-textarea
 											label="Answer"
 											:value="answer.answer"
 											@input="updateAnswerText($event, questionIndex, answerIndex)"
-											></v-text-field>
+											></v-textarea>
 										</v-flex>
 										<v-flex xs2>
 											<v-btn
@@ -62,7 +62,7 @@
 								</v-container>
 								<v-layout class="pl-2">
 									<v-btn
-									v-if="(item.answers).length < 5"
+									v-if="item.answers && (item.answers).length < 5"
 									class="mt-4"
 									color="primary"
 									@click="addAnswer(questionIndex)"

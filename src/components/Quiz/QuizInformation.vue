@@ -2,19 +2,19 @@
 	<v-container fluid>
 		<v-layout wrap>
 			<v-flex xs12>
-				<v-text-field
+				<v-textarea
 				label="Title"
 				:value="quiz.title"
 				@input="updateTitle"
-				></v-text-field>
+				></v-textarea>
 			</v-flex>
 			<v-flex xs12>
-				<v-text-field
+				<v-textarea
 				label="Description"
 				multi-line
 				:value="quiz.description"
 				@input="updateDescription"
-				></v-text-field>
+				></v-textarea>
 			</v-flex>
 		</v-layout>
 	</v-container>
