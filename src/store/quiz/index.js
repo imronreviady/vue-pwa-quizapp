@@ -1,4 +1,16 @@
-import { UPDATE_INFORMATION, ADD_QUESTION, REMOVE_QUESTION, UPDATE_QUESTION, ADD_ANSWER, REMOVE_ANSWER, UPDATE_ANSWER, RESET_QUIZ } from './mutations'
+import db from '@/db'
+import firebase from '@/firebase'
+
+import { 
+	UPDATE_INFORMATION, 
+	ADD_QUESTION, 
+	REMOVE_QUESTION, 
+	UPDATE_QUESTION, 
+	ADD_ANSWER, 
+	REMOVE_ANSWER, 
+	UPDATE_ANSWER, 
+	RESET_QUIZ 
+} from './mutations'
 
 const state = {
 	newQuiz: {
@@ -39,7 +51,7 @@ const mutations = {
 		})
 	},
 	[REMOVE_QUESTION](state, questionIndex) {
-		if (state.newQuiz.questions.length > 1) {
+		if ((state.newQuiz.questions).length > 1) {
 			state.newQuiz.questions.splice(questionIndex, 1)
 		}
 	},
@@ -51,7 +63,7 @@ const mutations = {
 	},
 	[ADD_ANSWER](state, questionIndex) {
 		const answers = state.newQuiz.questions[questionIndex].answers;
-		if (answers.length < 5) {
+		if ((answers).length < 5) {
 			answers.push({
 				answer: "Another one!",
 				isRight: false
@@ -64,7 +76,7 @@ const mutations = {
 
 		const question = state.newQuiz.questions[questionIndex]
 
-		if (question.answers.length > 1) {
+		if ((question.answers).length > 1) {
 			question.answers.splice(answerIndex, 1)
 		}
 	},
@@ -82,7 +94,35 @@ const mutations = {
 }
 
 const actions = {
+	async create({state}) {
+		const user = firebase.auth().currentUser
+		if (user) {
 
+			// check if there user question without right answer
+			state.newQuiz.questions.map(question => {
+				let hasRightAnswer = false
+
+				question.answers.map(answer => {
+					if (answer.isRight) hasRightAnswer = true
+				})
+
+				if (!hasRightAnswer) {
+					alert(`Question: '${question.question}' doesn't have a right answer!`)
+					throw new error()
+				}
+			})
+
+			// save to database
+			await db.collection('quizes').add({
+				...state.newQuiz,
+				userId: user.uid
+			})
+
+			alert('Quiz created')
+		} else {
+			alert('Unauthorized')
+		}
+	}
 }
 
 export default {

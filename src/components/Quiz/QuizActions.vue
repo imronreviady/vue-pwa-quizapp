@@ -2,7 +2,7 @@
 	<v-container>
 		<v-layout>
 			<v-btn
-			v-show="quiz.questions.length < 10"
+			v-show="(quiz.questions).length < 10"
 			class="mt-4"
 			color="primary"
 			@click="addQuestion"

@@ -62,7 +62,7 @@
 								</v-container>
 								<v-layout class="pl-2">
 									<v-btn
-									v-if="item.answers.length < 5"
+									v-if="(item.answers).length < 5"
 									class="mt-4"
 									color="primary"
 									@click="addAnswer(questionIndex)"
