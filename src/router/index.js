@@ -1,15 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Home from '@/pages/Home'
-import Create from '@/pages/Create'
-import Quiz from '@/pages/Quiz'
+import Home from '@/pages/Home';
+import Create from '@/pages/Create';
+import Quiz from '@/pages/Quiz';
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
   routes: [
     {
       path: '/',

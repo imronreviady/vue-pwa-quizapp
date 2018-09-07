@@ -1,20 +1,22 @@
 import Vue from 'vue'
-import Vuetify from 'vuetify'
+import Vuetify from 'vuetify';
+import VueEvents from 'vue-events'
 
-import App from './App.vue'
-import router from './router'
-import store from './store'
-import './auth'
+import App from './App';
+import router from './router';
+import store from './store';
+import './auth';
 
-import './registerServiceWorker'
+import('vuetify/dist/vuetify.css');
 
-import('vuetify/dist/vuetify.min.css')
+Vue.use(Vuetify);
+Vue.use(VueEvents);
 
-Vue.config.productionTip = false
-Vue.use(Vuetify)
+/* eslint-disable no-new */
 
 new Vue({
-	store,
-	router,
-	render: h => h(App)
+  router,
+  store,
+  components: { App },
+  render: h => h(App)
 }).$mount('#app')

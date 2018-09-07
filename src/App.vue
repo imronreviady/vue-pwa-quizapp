@@ -1,13 +1,13 @@
 <template>
   <v-app>
-    <toolbar 
+    <toolbar
       :login="login"
       :logout="logout"
       :profile="profile"
       :loggedIn="loggedIn"
     />
     <v-content>
-      <v-container fluid>
+      <v-container>
         <router-view></router-view>
       </v-container>
     </v-content>
@@ -17,16 +17,21 @@
 
 <script>
   import { mapActions, mapGetters } from 'vuex';
+
   import Toolbar from '@/components/Toolbar';
+
   export default {
     name: 'app',
+
     components: { Toolbar },
+
     computed: {
       ...mapGetters('user', {
         profile: 'profile',
         loggedIn: 'loggedIn'
       })
     },
+
     methods: {
       ...mapActions('user', {
         login: 'login',

@@ -1,53 +1,56 @@
 <template>
-	<v-card>
+  <v-card>
+    <v-card-title primary-title>
+      <div>
+        <div class="headline">
+          <v-icon>question_answer</v-icon> New Quiz
+        </div>
+      </div>
+    </v-card-title>
+    <v-subheader>Quiz Information</v-subheader>
+    <quiz-information />
 
-		<v-card-title primary-title>
-			<div>
-				<div class="headline">
-					<v-icon>question_answer</v-icon> New Quiz
-				</div>
-			</div>
-		</v-card-title>
+    <v-subheader>Quiz Questions</v-subheader>
+    <quiz-questions />
 
-		<v-subheader>Quiz Information</v-subheader>
-		<quiz-information />
+    <quiz-actions
+      :action="createQuiz"
+      actionName="Create"
+    />
 
-		<v-subheader>Quiz Questions</v-subheader>
-		<quiz-questions /> 
-
-		<quiz-actions
-		:action="createQuiz"
-		actionName="Create"
-		/>
-	</v-card>
+  </v-card>
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
+  import { mapActions } from 'vuex';
 
-	import QuizInformation from '@/components/Quiz/QuizInformation'
-	import QuizQuestions from '@/components/Quiz/QuizQuestions'
-	import QuizActions from '@/components/Quiz/QuizActions'
+  import QuizInformation from '@/components/Quiz/QuizInformation';
+  import QuizQuestions from '@/components/Quiz/QuizQuestions';
+  import QuizActions from '@/components/Quiz/QuizActions';
 
-	export default {
-		name: 'create-quiz',
-		components: {
-			QuizInformation,
-			QuizQuestions,
-			QuizActions
-		},
-		methods: {
-			...mapActions('quiz', {
-				create: 'create'
-			}),
-			async createQuiz() {
-				try {
-					await this.create()
-					this.$router.push('/')
-				} catch(error) {
-					alert('Something went wrong')
-				}
-			}
-		}
-	}
+  export default {
+    name: 'create-quiz',
+
+    components: {
+      QuizInformation,
+      QuizQuestions,
+      QuizActions
+    },
+
+    methods: {
+      ...mapActions('quiz', {
+        create: 'create'
+      }),
+
+      async createQuiz() {
+        try {
+          await this.create();
+          this.$router.push('/');
+        } catch(error) {
+          alert(error);
+        }
+
+      }
+    }
+  }
 </script>

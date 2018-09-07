@@ -1,19 +1,20 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-import user from '@/store/user/index'
-import quiz from '@/store/quiz/index'
+import user from '@/store/user';
+import quiz from '@/store/quiz';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const store = new Vuex.Store({
-	state: {
-		awesome: true
-	},
-	modules: {
-		user,
-		quiz
-	}
-})
+  state: {
+    awesome: true
+  },
 
-export default store
+  modules: {
+    user,
+    quiz
+  }
+});
+
+export default store;
